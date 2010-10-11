@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ulc:ULCApplicationConfiguration xmlns:ulc="http://www.canoo.com/ulc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.canoo.com/ulc ULCApplicationConfiguration.xsd ">
+	<ulc:applicationClassName>
+		com.canoo.groovy.ulc.SampleApplication
+	</ulc:applicationClassName>
+	<ulc:fileService><ulc:standardFileService>AllPermissions</ulc:standardFileService></ulc:fileService>
+</ulc:ULCApplicationConfiguration>

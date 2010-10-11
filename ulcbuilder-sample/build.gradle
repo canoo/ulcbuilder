@@ -1,0 +1,26 @@
+configurations {
+    runapp
+}
+
+dependencies {
+    compile project(':ulcbuilder-core')
+    compile project(':ulcbuilder-miglayout')
+    compile project(':ulcbuilder-formlayout')
+    runapp "com.canoo.ulc:ulc-core-development:$ulcVersion"
+}
+
+task 'run-app'(dependsOn: build) << {
+    List classpath = configurations.compile.collect([]){it}
+    configurations.runapp.collect(classpath){it}
+    classpath << new File("$buildDir/classes/main")
+    classpath = classpath.unique()
+    String javaHome = System.getProperty('java.home')
+    String javaCmd = [javaHome, 'bin', 'java'].join(File.separator) 
+
+    List cmd = [javaCmd]
+    ['-classpath', classpath.join(File.pathSeparator), 'com.canoo.groovy.ulc.SampleApplication'].each { s -> if(s) cmd << s }
+
+    Process p = Runtime.runtime.exec(cmd as String[], null, null)
+    p.consumeProcessOutput(System.out, System.err)
+    p.waitFor()
+}

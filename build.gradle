@@ -1,0 +1,103 @@
+subprojects {
+    // enhance all sub projects with the java tasks
+    apply plugin: 'groovy'
+    apply plugin: 'maven'
+
+    repositories {
+        org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials(nexusAuthRealm, nexusAuthHost, nexusAuthUser, nexusAuthPassword);
+        mavenRepo urls: 'https://ci.canoo.com/nexus/content/repositories/public-releases'
+        mavenRepo urls: 'http://ci.canoo.com/nexus/content/repositories/releases/'
+        mavenCentral()
+    }
+
+    configurations {
+        ulcDeveloperKeyConf
+    }
+
+    dependencies {
+        ulcDeveloperKeyConf "com.canoo.ulc:ulc-developer-key:$ulcVersion"
+        groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.4'
+        compile "com.canoo.ulc:ulc-core-server:$ulcVersion"
+        archives 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2'
+    }
+
+    plugins.withType(JavaPlugin).whenPluginAdded {
+        compileJava.options.debug(debugLevel: debugOptions)
+        compileTestJava.options.define(debug: true)
+    }
+
+    // temp directory
+    tmpDir = new File((File) buildDir, 'tmp')
+
+    configurations.compile.transitive = true
+    configurations.testCompile.transitive = true
+
+    task initDirs << {
+        project.sourceSets.main.java.srcDirs*.mkdirs()
+        project.sourceSets.main.groovy.srcDirs*.mkdirs()
+        project.sourceSets.main.resources.srcDirs*.mkdirs()
+    }
+
+    File ulcHomeDir = new File(System.getProperty("user.home"), ".ulc-" + ulcVersion.substring(0, 3))
+
+    //checks if local ulc developer license exists. if not it will try to install the license.
+    checkLocalDeveloperLicense = {
+        if (ulcHomeDir.exists()) {
+            def licenseExists = ulcHomeDir.listFiles().find {File file ->
+                file.name.matches("DEVELOPER-\\d+.lic")
+            }
+            if (licenseExists) return true
+        } else {
+            if (!ulcHomeDir.mkdir()) {
+                return false
+            }
+        }
+
+        copyDeveloperKeyFromJar.call()
+        return true
+    }
+
+    //copy license files from jar to ulc home directory
+    copyDeveloperKeyFromJar = {
+        ant.unzip(src: configurations.ulcDeveloperKeyConf.asPath, dest: ulcHomeDir)
+    }
+
+    //error if developer license couldn't be installed
+    developerLicenseError = {
+        ant.fail(message: "LICENSE ERROR: You haven't got any ULC-$ulcVersion-Developer license installed" +
+                " or you aren't connected to the internet to get the license.")
+    }
+
+    uploadArchives {
+        repositories.mavenDeployer {
+            //artifacts to upload from following configuration
+            configuration = configurations.runtime
+    
+            if (deployAsRelease.equals('true')) {
+                nexusDeployURL = nexusReleaseDeployURL
+            } else {
+                version = "$version-SNAPSHOT"
+            }
+    
+            Set<Dependency> dependencies = configurations.runtime.allDependencies
+            def mavenDependencies = dependencies.grep(ExternalModuleDependency).collect { ExternalModuleDependency dependency ->
+                org.apache.maven.model.Dependency mavenDependency = new org.apache.maven.model.Dependency()
+                mavenDependency.groupId = dependency.group
+                mavenDependency.artifactId = dependency.name
+                mavenDependency.version = dependency.version
+                mavenDependency
+            }
+            pom.whenConfigured { pom ->
+                pom.dependencies = mavenDependencies
+            }
+            repository(url: nexusDeployURL) {
+                authentication(userName: nexusDeployUser, password: nexusDeployPassword)
+            }
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '0.9-rc-1'
+    jarPath = 'gradle/wrapper'
+}

@@ -1,0 +1,7 @@
+dependencies {
+    compile project(':ulcbuilder-core')
+    compile 'com.canoo.ulc.ext.ULCFormLayout:ULCFormLayout-client:1.0'
+    compile 'com.canoo.ulc.ext.ULCFormLayout:ULCFormLayout-server:1.0'
+}
+
+metaInf << fileTree(dir: 'src/main/META-INF')
