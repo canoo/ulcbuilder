@@ -20,6 +20,7 @@ task 'run-app'(dependsOn: build) << {
     List cmd = [javaCmd]
     ['-classpath', classpath.join(File.pathSeparator), 'com.canoo.groovy.ulc.SampleApplication'].each { s -> if(s) cmd << s }
 
+    println cmd
     Process p = Runtime.runtime.exec(cmd as String[], null, null)
     p.consumeProcessOutput(System.out, System.err)
     p.waitFor()

@@ -7,7 +7,7 @@ import com.ulcjava.base.application.util.Color
 import com.ulcjava.base.server.GradientPaint
 import com.ulcjava.base.server.GradientPaint.Orientation
 
-class SampleApplication extends SingleFrameApplication {
+class SampleApplication /*extends SingleFrameApplication*/ {
     private final ULCBuilder builder = new ULCBuilder()
 
     @Override
