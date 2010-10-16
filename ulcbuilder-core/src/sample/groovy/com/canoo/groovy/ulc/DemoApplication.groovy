@@ -1,12 +1,8 @@
 package com.canoo.groovy.ulc
 
-import com.canoo.groovy.ulc.Customer
-import com.canoo.groovy.ulc.FileTableTreeModel
-import com.canoo.groovy.ulc.ULCBuilder
 import com.canoo.groovy.ulc.tree.TreeNodeBuilder
 import com.ulcjava.base.application.tree.DefaultTreeModel
 import com.ulcjava.base.application.util.Color
-import com.ulcjava.base.development.DevelopmentRunner
 import com.ulcjava.base.application.*
 import com.ulcjava.base.application.tabletree.DefaultMutableTableTreeNode
 import com.ulcjava.base.application.tabletree.DefaultTableTreeModel

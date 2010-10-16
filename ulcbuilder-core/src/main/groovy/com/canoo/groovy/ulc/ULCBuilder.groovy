@@ -142,7 +142,7 @@ class ULCBuilder extends FactoryBuilderSupport {
         registerBeanFactory("buttonGroup", ULCButtonGroup)
         addAttributeDelegate(ULCBuilder.&buttonGroupAttributeDelegate)
 
-        //object id delegage, for propertyNotFound
+        //object id delegate, for propertyNotFound
         addAttributeDelegate(ULCBuilder.&objectIDAttributeDelegate)
     }
 
