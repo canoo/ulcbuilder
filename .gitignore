@@ -1,5 +1,6 @@
 .gradle/
 gradle-app.setting
+gradle.properties
 */build/
 *.iml
 *.ipr
