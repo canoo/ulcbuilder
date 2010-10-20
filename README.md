@@ -1,7 +1,8 @@
 ULCBuilder
 ==========
 
-ULCBuilder is a Groovy based builder for ULC powered applications.
+ULCBuilder is a Groovy based builder for ULC (core of the Canoo RIA Suite) 
+powered applications.
 
 ULCBuilder and Groovy makes possible the use of a *DSL-like* language
 to defining the UI of an application, in the same vein as SwingBuilder
