@@ -72,7 +72,7 @@ that help writing applications in a more efficient way. `SingleFrameApplication`
 is one of such classes. You're only required to provide an implementation for the
 `createStartupMainComntent()` method. This is where the builder will be used to
 create the components that conform the application. This example relies on one
-fo the builder plugins to be available in the classpath, we're refering to the
+of the builder plugins to be available in the classpath, we're refering to the
 ulcbuilder-miglayout plugin.
 
 Granted the example is quite trivial but compare what would be the alternate code
@@ -88,7 +88,7 @@ if the example were written in plain java
     p.add(new ULCButton("Click!"), "right");
     return p;
 
-With the builder you save a few characters (parentehis and semi-colons), but you
+With the builder you save a few characters (parenthesis and semi-colons), but you
 also gain cleaner code. It's easier to determine the hierarchy of components at
 first glance whereas in the Java version you'll quickly get container adds all
 over the place; not counting code factorizations into private methods to hide that
@@ -124,8 +124,8 @@ has no real impact on how they are used.
   <tr><th colspan="2">Binding</th></tr>
   <tr><td>bind</td><td>FullBinding</td></tr>
   <tr><th colspan="2">PassThruNodes</th></tr>
-  <tr><td>widget</td><td>acceps any ULCComponent/td></tr>
-  <tr><td>container</td><td>acceps any ULCComponent/td></tr>
+  <tr><td>widget</td><td>accepts any ULCComponent/td></tr>
+  <tr><td>container</td><td>accepts any ULCComponent/td></tr>
   <tr><td>bean</td><td>any class</td></tr>
   <tr><th colspan="2">Windows</th></tr>
   <tr><td>dialog</td><td>ULCDialog</td></tr>
