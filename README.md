@@ -125,8 +125,8 @@ has no real impact on how they are used.
   <tr><th colspan="2">Binding</th></tr>
   <tr><td>bind</td><td>FullBinding</td></tr>
   <tr><th colspan="2">PassThruNodes</th></tr>
-  <tr><td>widget</td><td>accepts any ULCComponent/td></tr>
-  <tr><td>container</td><td>accepts any ULCComponent/td></tr>
+  <tr><td>widget</td><td>accepts any ULCComponent</td></tr>
+  <tr><td>container</td><td>accepts any ULCComponent</td></tr>
   <tr><td>bean</td><td>any class</td></tr>
   <tr><th colspan="2">Windows</th></tr>
   <tr><td>dialog</td><td>ULCDialog</td></tr>
